@@ -7,16 +7,10 @@
 
 import SwiftUI
 
-var personalityList: [PersonalInterestModel] = [
-    PersonalInterestModel (name: "Relaxed", isChoosed: false, category: "personality"),
-    PersonalInterestModel(name: "Energic", isChoosed: false, category: "personality"),
-    PersonalInterestModel(name: "Chatty", isChoosed: true, category: "personality"),
-    PersonalInterestModel (name: "Quiet", isChoosed: false, category: "personality"),
-    PersonalInterestModel (name: "Analytical", isChoosed: false, category: "personality")
-]
-
 struct PersonalityOptionsView: View {
     @Binding var path: NavigationPath
+    var onComplete: () -> Void
+    @EnvironmentObject var personalityList: PersonalityModel
     
     let columns = [
         GridItem(.flexible()),
@@ -24,7 +18,7 @@ struct PersonalityOptionsView: View {
         GridItem(.flexible())
     ]
     
-    var body: some View {        
+    var body: some View {
         Spacer().frame(height: 42)
         
         VStack (alignment: .leading) {
@@ -46,17 +40,21 @@ struct PersonalityOptionsView: View {
             Spacer().frame(height: 50)
             
             LazyVGrid(columns: columns, alignment: .center, spacing: 15) {
-                ForEach(personalityList) { personality in
-                    if personality.category == "personality" {
-                        if personality.isChoosed == false {
-                            Button(personality.name, action: {print("you click \(personality.name)")})
-                                .buttonStyle(.bordered)
-                                .foregroundStyle(.gray)
-                        } else {
-                            Button(personality.name, action: {print("you click \(personality.name)")})
-                                .buttonStyle(.borderedProminent)
-                        }
-                    }     
+                ForEach(personalityList.items) { personality in
+                    if personality.isChoosed == false {
+                        Button(personality.name, action: {
+                            personalityList.selectOnly(personality)
+                            print("you click \(personality.name)")
+                        })
+                            .buttonStyle(.bordered)
+                            .foregroundStyle(.gray)
+                    } else {
+                        Button(personality.name, action: {
+                            personalityList.selectOnly(personality)
+                            print("you click \(personality.name)")
+                        })
+                            .buttonStyle(.borderedProminent)
+                    }
                 }
             }
             
@@ -66,6 +64,7 @@ struct PersonalityOptionsView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Done", action: {
                     path.append(Route.homeView)
+                    onComplete()
                 })
             }
         }
@@ -76,6 +75,7 @@ struct PersonalityOptionsView: View {
 
 #Preview {
     StatefulPreviewWrapper(NavigationPath()) { path in
-        PersonalityOptionsView(path: path)
+        PersonalityOptionsView(path: path, onComplete: {})
     }
+    .environmentObject(PersonalityModel())
 }
