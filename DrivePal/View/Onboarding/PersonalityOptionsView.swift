@@ -17,6 +17,7 @@ var personalityList: [PersonalInterestModel] = [
 
 struct PersonalityOptionsView: View {
     @Binding var path: NavigationPath
+    var onComplete: () -> Void
     
     let columns = [
         GridItem(.flexible()),
@@ -66,6 +67,7 @@ struct PersonalityOptionsView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Done", action: {
                     path.append(Route.homeView)
+                    onComplete()
                 })
             }
         }
@@ -76,6 +78,6 @@ struct PersonalityOptionsView: View {
 
 #Preview {
     StatefulPreviewWrapper(NavigationPath()) { path in
-        PersonalityOptionsView(path: path)
+        PersonalityOptionsView(path: path, onComplete: {})
     }
 }

@@ -7,21 +7,14 @@
 
 import SwiftUI
 
-enum Route: Hashable {
-    case interestView
-    case personalityView
-    case homeView
-}
-
 struct ContentView: View {
     let columns = [
         GridItem(.flexible())
     ]
     
-    @State private var path = NavigationPath()
+    @Binding var path: NavigationPath
     
     var body: some View {
-        NavigationStack(path: $path) {
             VStack (alignment: .center) {
                 Text("Getting Started in DrivePal")
                     .font(
@@ -109,22 +102,14 @@ struct ContentView: View {
                     path.append(Route.interestView)
                 } )
                 .buttonStyle(.borderedProminent)
-                .navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case .interestView:
-                        InterestOptionsView(path: $path)
-                    case .personalityView:
-                        PersonalityOptionsView(path: $path)
-                    case .homeView:
-                        HomeView()
-                    }
-                }
+                
                 
             }
         }
     }
-}
 
 #Preview {
-    ContentView()
+    StatefulPreviewWrapper(NavigationPath()) { path in
+        ContentView(path: path)
+    }
 }

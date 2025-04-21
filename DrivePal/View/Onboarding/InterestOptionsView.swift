@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+var interestList: [PersonalInterestModel] = [
+    PersonalInterestModel (name: "Artwork", isChoosed: false, category: "interest"),
+    PersonalInterestModel(name: "Astrology", isChoosed: false, category: "interest"),
+    PersonalInterestModel(name: "Anime", isChoosed: true, category: "interest"),
+    PersonalInterestModel (name: "Book", isChoosed: false, category: "interest"),
+    PersonalInterestModel (name: "Tattoo", isChoosed: false, category: "interest"),
+    PersonalInterestModel (name: "Podcast", isChoosed: false, category: "interest"),
+    PersonalInterestModel (name: "Money", isChoosed: false, category: "interest"),
+    PersonalInterestModel (name: "Network", isChoosed: false, category: "interest"),
+    PersonalInterestModel (name: "Friend", isChoosed: false, category: "interest")
+]
+
 struct InterestOptionsView: View {
     @Binding var path: NavigationPath
     
