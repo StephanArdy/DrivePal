@@ -10,9 +10,9 @@ import SwiftUI
 struct OptionCardView: View {
     let title: String
     let isChoosed: Bool
+    let onTap: () -> Void
     
     var body: some View {
-        
         HStack {
             Text(title)
                 .font(.body)
@@ -30,10 +30,13 @@ struct OptionCardView: View {
         .padding(.horizontal, 21)
         .background(Color(.white))
         .clipShape(RoundedRectangle(cornerSize: .init(width: 8, height: 12)))
+        .onTapGesture {
+            onTap()
+        }
     }
     
 }
 
 #Preview {
-    OptionCardView(title: "Astrology", isChoosed: true)
+    OptionCardView(title: "Astrology", isChoosed: true, onTap: {})
 }

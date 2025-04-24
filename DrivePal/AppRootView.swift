@@ -23,21 +23,19 @@ struct AppRootView: View {
             NavigationStack(path: $path) {
                 ContentView(path: $path)
                 
-                .navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case .interestView:
-                        InterestOptionsView(path: $path)
-                    case .personalityView:
-                        PersonalityOptionsView(path: $path, onComplete: {
-                            hasCompletedOnboarding = true
-                        })
-                    case .homeView:
-                        TabBarView()
+                    .navigationDestination(for: Route.self) { route in
+                        switch route {
+                        case .interestView:
+                            InterestOptionsView(path: $path)
+                        case .personalityView:
+                            PersonalityOptionsView(path: $path, onComplete: {
+                                hasCompletedOnboarding = true
+                            })
+                        case .homeView:
+                            TabBarView()
+                        }
                     }
-                }
             }
-            
-            
         } else {
             TabBarView()
         }
@@ -47,4 +45,6 @@ struct AppRootView: View {
 
 #Preview {
     AppRootView()
+        .environmentObject(InterestModel())
+        .environmentObject(PersonalityModel())
 }

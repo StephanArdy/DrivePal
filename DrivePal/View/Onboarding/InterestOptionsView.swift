@@ -21,6 +21,8 @@ var interestList: [PersonalInterestModel] = [
 
 struct InterestOptionsView: View {
     @Binding var path: NavigationPath
+    @EnvironmentObject var interestList: InterestModel
+
     
     let columns = [
         GridItem(.flexible()),
@@ -50,17 +52,22 @@ struct InterestOptionsView: View {
             Spacer().frame(height: 50)
             
             LazyVGrid(columns: columns, alignment: .center, spacing: 15) {
-                ForEach(interestList) { interest in
-                    if interest.category == "interest" {
+                ForEach(interestList.items) { interest in
                         if interest.isChoosed == false {
-                            Button(interest.name, action: {print("you click \(interest.name)")})
+                            Button(interest.name, action: {
+                                interestList.toogle(interest)
+                                print("you click \(interest.name)")
+                            })
                                 .buttonStyle(.bordered)
                                 .foregroundStyle(.gray)
                         } else {
-                            Button(interest.name, action: {print("you click \(interest.name)")})
+                            Button(interest.name, action: {
+                                interestList.toogle(interest)
+                                print("you click \(interest.name)")
+                            })
                                 .buttonStyle(.borderedProminent)
                         }
-                    }
+                    
                 }
             }
         }
@@ -81,4 +88,5 @@ struct InterestOptionsView: View {
     StatefulPreviewWrapper(NavigationPath()) { path in
         InterestOptionsView(path: path)
     }
+    .environmentObject(InterestModel())
 }

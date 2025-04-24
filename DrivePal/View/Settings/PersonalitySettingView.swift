@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PersonalitySettingView: View {
     @State private var multiSelection = Set<UUID>()
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var personalityList: PersonalityModel
     
     var body: some View {
         List(selection: $multiSelection) {
@@ -20,16 +22,20 @@ struct PersonalitySettingView: View {
             }
             .listRowBackground(Color.clear)
             
-            ForEach (personalityList) { personality in
-                OptionCardView(title: personality.name, isChoosed: personality.isChoosed)
+            ForEach (personalityList.items) { personality in
+                OptionCardView(title: personality.name, isChoosed: personality.isChoosed) {
+                    personalityList.selectOnly(personality)
+                }
             }
             .listRowBackground(Color.clear)
             .listRowSeparator(.hidden)
         }
         .navigationTitle("Personality")
+        .toolbarVisibility(.hidden, for: .tabBar)
     }
 }
 
 #Preview {
     PersonalitySettingView()
+        .environmentObject(PersonalityModel())
 }

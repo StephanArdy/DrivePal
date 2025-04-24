@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct InterestSettingView: View {
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var interestList: InterestModel
+    
     var body: some View {
         List {
             HStack {
@@ -18,16 +21,20 @@ struct InterestSettingView: View {
             }
             .listRowBackground(Color.clear)
             
-            ForEach (interestList) { interest in
-                OptionCardView(title: interest.name, isChoosed: interest.isChoosed)
+            ForEach (interestList.items) { interest in
+                OptionCardView(title: interest.name, isChoosed: interest.isChoosed) {
+                    interestList.toogle(interest)
+                }
             }
             .listRowBackground(Color.clear)
             .listRowSeparator(.hidden)
         }
         .navigationTitle("Interest")
+        .toolbarVisibility(.hidden, for: .tabBar)
     }
 }
 
 #Preview {
     InterestSettingView()
+        .environmentObject(InterestModel())
 }

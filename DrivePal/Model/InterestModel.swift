@@ -5,9 +5,8 @@
 //  Created by stephan on 11/04/25.
 //
 
-struct Interest: Identifiable {
+struct InterestItem: Identifiable {
     var name: String
     var isChoosed: Bool
-    var category: String
     var id: String {name}
 }

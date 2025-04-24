@@ -15,9 +15,6 @@ struct HomeView: View {
        
         NavigationStack {
             VStack(alignment: .center) {
-//                Spacer()
-//                    .frame(height: 143)
-                
                 Image("DrivePal")
                     .resizable()
                     .frame(width: 134, height: 134)

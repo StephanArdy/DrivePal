@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PreferencesSettingView: View {
     @State private var singleSelection: UUID?
+    @Environment(\.dismiss) private var dismiss
     
     let columns = [
         GridItem(.flexible()),
@@ -27,18 +28,25 @@ struct PreferencesSettingView: View {
             
             Section(header: Text("Voice Settings")) {
                 LazyVGrid (columns: columns, alignment: .leading, spacing: 20) {
-                    VoiceCardView()
-                    VoiceCardView()
-                    VoiceCardView()
-                    VoiceCardView()
-                    VoiceCardView()
+                    VoiceCardView(isChoosed: true)
+                    VoiceCardView(isChoosed: false)
+                    VoiceCardView(isChoosed: false)
+                    VoiceCardView(isChoosed: false)
+                    VoiceCardView(isChoosed: false)
                 }
             }
             .listRowBackground(Color.clear)
         }
         .navigationTitle("Preferences")
-        
-        
+        .toolbar{
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Save", action: {
+                    print("you click this button")
+                    dismiss()
+                })
+            }
+        }
+        .toolbarVisibility(.hidden, for: .tabBar)
     }
 }
 
